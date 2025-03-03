@@ -10,6 +10,7 @@ class Solution {
         unordered_map<int, int> hashMap;
         for (int i = 0; i < nums.size(); i++) {
             auto it = hashMap.find(target - nums[i]);
+            // find 找到了匹配的元素，在哈希表中存在这个元素满足 target - nums[i] == nums[i]
             if (it != hashMap.end()) {
                 return {it->second, i};
             }
