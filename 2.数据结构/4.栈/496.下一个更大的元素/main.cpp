@@ -37,7 +37,7 @@ public:
 int main(int argc, char const *argv[]){
     vector<int> nums1 = {4,1,2};
     vector<int> nums2 = {1,3,4,2};
-    S sol;
+    Solution sol;
     auto ret = sol.nextGreaterElement(nums1, nums2);
     for (auto it : ret){
         cout << it << " ";
