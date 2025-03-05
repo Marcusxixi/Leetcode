@@ -8,5 +8,10 @@ count:
 	./count
 	rm -f count *.o
 
+ascii:
+	g++ -std=c++11 ascii.cpp -o ascii
+	./ascii
+	rm -f ascii *.o
+
 clean:
 	rm -f hash_table *.o
