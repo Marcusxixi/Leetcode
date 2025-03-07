@@ -9,21 +9,39 @@ using namespace std;
 
 class Solution {
 public:
-    int majorityElement(vector<int>& nums) {
-        unordered_map<int, int> hash_table;
-        int majority = (nums.size()) / 2 + 1;
-        for (auto num : nums) {
-            hash_table[num] += 1;
-            if (hash_table[num] >= majority) return num;
+
+    int count_in_range(vector<int>& nums, int target, int lo, int hi) {
+        int count = 0;
+        for(int i = lo; i <= hi; i++) {
+            if (nums[i] == target) count++;
+        }
+        return count;
+    }
+
+
+    int rec(vector<int>& nums, int lo, int hi) {
+        if (lo == hi) return nums[lo];
+        int mid = lo + (hi - lo) / 2;
+        int left_major = rec(nums, lo, mid);
+        int right_major = rec(nums, mid + 1, hi);
+        if (count_in_range(nums, left_major, lo, hi) > (hi - lo) / 2) {
+            return left_major;
+        }
+        if (count_in_range(nums, right_major, lo, hi) > (hi - lo) / 2) {
+            return right_major;
         }
         return -1;
+    }   
+
+    int majorityElement(vector<int>& nums) {
+        return rec(nums, 0, nums.size() - 1);
     }
 };
 
 
 int main(int argc, char const *argv[]){
     Solution sol;
-    vector<int> nums = {2,2,1,1,1,2,2};
+    vector<int> nums = {6, 5, 5};
     cout << sol.majorityElement(nums) << endl;
     return 0;
 }
