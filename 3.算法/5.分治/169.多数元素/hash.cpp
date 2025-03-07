@@ -27,4 +27,4 @@ int main(int argc, char const *argv[]){
     Solution sol;
     cout << sol.majorityElement(nums) << endl;
     return 0;
-}
+} 
