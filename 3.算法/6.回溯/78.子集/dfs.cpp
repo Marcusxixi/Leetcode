@@ -10,19 +10,22 @@ using namespace std;
 class Solution {
 public:
     vector<vector<int>> subsets(vector<int>& nums) {
-        vector<vector<int>> ret = {{}};
-        for (int i = 0; i < nums.size(); i++) {
-            int ret_size = ret.size();
-            for (int j = 0; j < ret_size; j++) {
-                vector<int> cp = ret[j];
-                cp.push_back(nums[i]);
-                ret.push_back(cp);
-            } 
+        vector<vector<int>> result = {};
+        vector<int> subset = {};
+        dfs(nums, result, subset, 0);
+        return result;
+    }
+
+private:
+    void dfs(vector<int>& nums, vector<vector<int>>& result, vector<int>& sub_set, int index) {
+        result.push_back(sub_set);
+        for (int i = index; i < nums.size(); i++) {
+            sub_set.push_back(nums[i]);
+            dfs(nums, result, sub_set, i + 1);
+            sub_set.pop_back();
         }
-        return ret;
     }
 };
-
 
 
 int main(int argc, char const *argv[]){
