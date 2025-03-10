@@ -19,11 +19,13 @@ struct TreeNode {
 class Solution {
 public:
     void dfs(TreeNode* root, vector<vector<int>>& result, int level) {
-        if (root == nullptr) return;
+        if (!root) return;
         if (level >= result.size()) {
-            result.push_back(vector<int>());
+            result.insert(result.begin(), vector<int>());
         }
-        result[level].push_back(root->val);
+
+        int insert_index = result.size() - level - 1;
+        result[insert_index].push_back(root->val);
         if (root->left) dfs(root->left, result, level + 1);
         if (root->right) dfs(root->right, result, level + 1);
 
@@ -33,8 +35,6 @@ public:
         vector<vector<int>> result;
         if (!root) return result;
         dfs(root, result, 0);
-        reverse(result.begin(), result.end());
-        return result;
     }
 };
 
