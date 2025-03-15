@@ -8,6 +8,11 @@ hash:
 	./main
 	rm -f main *.o
 
+trie:
+	clang++ -std=c++11 trie.cpp -o main
+	./main
+	rm -f main *.o
+
 
 clean:
 	rm -f main *.o
