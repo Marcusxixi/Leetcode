@@ -6,18 +6,25 @@ using namespace std;
 class Solution {
 public:
     vector<vector<string>> groupAnagrams(vector<string>& strs) {
-        unordered_map<int, vector<string>> hash_table;
-        vector<vector<string>>  result; 
-        int index = 0;
-        for (const string& str: strs) {
-            int index = 0;
-            for (const char& ch: str) {
-                index += ch - 'a';
+        unordered_map<string, vector<string>> hash_table;
+        for(string str: strs) {
+            int counts[26] = {0};
+            for (char& c: str) {
+                ++counts[c - 'a'];
             }
-            hash_table[index].emplace_back(str);
+
+            string key = "";
+            for (int i = 0; i < 26; ++i) {
+                if (counts[i] != 0) {
+                    key.push_back(i + 'a');
+                    key.push_back(counts[i]);
+                }
+            }
+            hash_table[key].emplace_back(str);
         }
-        for (auto it = hash_table.begin(); it != hash_table.end(); ++ it) {
-            result.emplace_back(it->second);
+        vector<vector<string>> result;
+        for(auto& p: hash_table) {
+            result.emplace_back(p.second);
         }
         return result;
     }
@@ -27,15 +34,14 @@ void print(vector<vector<string>>& strings) {
     string result = "{";
     for (auto& words:strings) {
         result += "{";
-        for (int i = 0; i < words.size() - 1; i++) {
+        for (int i = 0; i < words.size(); i++) {
             result += words[i] + ", ";
         }
-        result += words[words.size() - 1] + "}, ";
+        result = result.substr(0, result.size() - 2);
     }
     result = result.substr(0, result.size() - 2);
     result += "}\n";
     cout << result;
-
 }
 
 int main() {
