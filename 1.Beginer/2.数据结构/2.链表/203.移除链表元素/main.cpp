@@ -50,7 +50,7 @@ int main(int argc, char const *argv[]){
     head->next->next->next->next = new ListNode(4);
     head->next->next->next->next->next = new ListNode(5);
     head->next->next->next->next->next->next = new ListNode(6);
-    sol.removeElements(head, 6);
+    
     sol.printResult(head);
     return 0;
 }

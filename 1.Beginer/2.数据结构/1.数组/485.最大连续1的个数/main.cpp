@@ -11,14 +11,13 @@ public:
         for (int i = 0; i < nums.size(); i++){
             if (nums[i] == 1) {
                 tmp_nums++;
+                max_count = max(max_count, tmp_nums);
             }
             else {
-                max_count = max(max_count, tmp_nums);
                 tmp_nums = 0;
             }
         }
-        max_count = max(max_count, tmp_nums);
-        return max_count;
+        return max(max_count, tmp_nums);
     }
 };
 
