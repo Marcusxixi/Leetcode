@@ -24,16 +24,63 @@ public:
         this->capacity = capacity;
         size = 0;
         head = new DLinkListNode();
-        
+        tail = new DLinkListNode();
+        head->next = tail;
+        tail->pre = head;
         
     }
     
     int get(int key) {
-        
+        if (!cache.count(key)) return -1;
+        // 如果 key 存在，先通过哈西边定位，再移到头节点
+        DLinkListNode* node = cache[key];
+        moveToHead(node);
+        return node->value;
+
     }
     
     void put(int key, int value) {
-        
+        if (!cache.count(key)) {
+            DLinkListNode * node = new DLinkListNode(key, value);
+            cache[key] = node;
+            
+            addToHead(node);
+            ++size;
+            if (size > capacity) {
+                DLinkListNode * removeNode = removeTail();
+                cache.erase(removeNode->key);
+                delete removeNode;
+                --size;
+            }
+        } else {
+            DLinkListNode* node = cache[key];
+            node->value = value;
+            moveToHead(node);
+        }
+    }
+
+    void addToHead(DLinkListNode* node) {
+        node->pre = head;
+        node->next = head->next;
+        head->next->pre = node;
+        head->next = node;
+
+    }
+
+    void removeNode(DLinkListNode* node) {
+        node->pre->next = node->next;
+        node->next->pre = node->pre;
+    }
+
+    void moveToHead(DLinkListNode* node) {
+        removeNode(node);
+        addToHead(node);
+    }
+
+    DLinkListNode * removeTail() {
+        DLinkListNode* node = tail->pre;
+        removeNode(node);
+        return node;
     }
 };
 
