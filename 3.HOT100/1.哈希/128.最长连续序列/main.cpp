@@ -11,7 +11,7 @@ public:
         for (int num: nums) {
             hash_set.insert(num);
         }
-        int ret = 1;
+        int ret = 0;
         for (int num: nums) {
             if (!hash_set.count(num - 1)) {
                 int curRet = 1;
