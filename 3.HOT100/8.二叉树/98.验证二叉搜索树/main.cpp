@@ -11,18 +11,11 @@ struct TreeNode {
 
 class Solution {
 public:
-    bool rec(TreeNode* root, long long lower, long long upper) {
-        if (! root) return 1;
-        if (root->val <= lower || root->val >= upper) {
-            return false;
-        }
-
-        return rec(root->left, lower, root->val) && 
-                rec(root->right, root->val, upper);
-
-    }
-
+    long pre = LONG_MIN;
     bool isValidBST(TreeNode* root) {
-        return rec(root, LONG_MIN, LONG_MAX);
+        if (!root) return 1;
+        if (!isValidBST(root->left)) return 0;
+        if (root->val <= pre) return 0;
+        return isValidBST(root->right);
     }
 };
