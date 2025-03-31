@@ -1,6 +1,7 @@
 #include<vector>
 using namespace std;
 #include<iostream>
+#include<unordered_set>
 
 class Solution {
 
@@ -16,34 +17,28 @@ class Solution {
 public:
     vector<vector<int>> ret;
 
-    void backtrack(vector<int>& output, int first, int len) {
-        if (first == len) {
-            cout << "达到末尾，添加进结果";
-            print1DIntVector(output);
-            ret.emplace_back(output);
-            return;
-        }
-    
-        for (int i = first; i < len; ++i) {
-            cout << "交换 " << "i = " << i << " 和 " << "first = " << first << " 前: ";
-            for (int num : output) cout << num << " ";
-            cout << endl;
-    
-            swap(output[i], output[first]);
-    
-            backtrack(output, first + 1, len);
-    
-            swap(output[i], output[first]);
-    
-            cout << "回溯 " << "i = " << i << " 和 " << "first = " << first << " 后: ";
-            for (int num : output) cout << num << " ";
-            cout << endl;
-        }
-    }
     
 
     vector<vector<int>> permute(vector<int>& nums) {
-        backtrack(nums, 0, nums.size());
+        int n = nums.size();
+        vector<vector<int>> ret;
+        vector<int> path(n), on_path(n);
+        function<void(int)> dfs = [&](int i) {
+            if (i == n) {
+                ret.push_back(path);
+                return;
+            }
+            for (int j = 0; j < n; ++j) {
+                if (!on_path[j]) {
+                    path[i] = nums[j];
+                    on_path[j] = 1;
+                    dfs(i + 1);
+                    on_path[j] = 0;
+                }
+            }
+            
+        };
+        dfs(0);
         return ret;
     }
 };
