@@ -1,5 +1,6 @@
 #include<string>
 using namespace std;
+#include<unordered_map>
 
 class Solution {
 public:
