@@ -16,11 +16,8 @@ private:
 public:
     void rec(TreeNode* root, int level) {
         if (!root) return;
-        if (ret.size() == level) {
-            ret.push_back(vector<int>(root->val));
-            return;
-        }
-        ret[level].push_back(root->val);
+        if (ret.size() == level) ret.push_back(vector<int>{root->val});
+        else ret[level].push_back(root->val);
         rec(root->left, level + 1);
         rec(root->right, level + 1);
     }
