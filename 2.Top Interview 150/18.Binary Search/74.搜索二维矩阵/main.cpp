@@ -1,6 +1,5 @@
 #include<vector>
 using namespace std;
-#include<functional>
 
 class Solution {
 public:
@@ -8,7 +7,7 @@ public:
     bool searchMatrix(vector<vector<int>>& matrix, int target) {
         int rows = matrix.size(), cols = matrix[0].size();
 
-        function<bool(vector<int>&)> searchInside = [&] (vector<int>& arr) -> bool {
+        auto searchInside = [&] (vector<int>& arr) -> bool {
             int left = 0, right = arr.size() - 1;
             while (left <= right) {
                 int mid = left + (right - left) / 2;
