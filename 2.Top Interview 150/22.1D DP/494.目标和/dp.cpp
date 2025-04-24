@@ -16,18 +16,30 @@ public:
         target /= 2;
         int n = nums.size();
 
-        vector<vector<int>> f(2, vector(target + 1, 0));
-        f[0][0] = 1;
-        for (int i = 0; i < nums.size(); ++i) {
-            for (int c = 0; c < target + 1; ++c) {
-                if (c < nums[i]) {
-                    // 这里利用了滚动数组的原理节省空间
-                    // 因为 f(i) = f(i - 1) 只需要前面一个的值，再往前的值不需要
-                    f[(i + 1) % 2][c] = f[i % 2][c];
-                }
-                else f[(i + 1) % 2][c] = f[i % 2][c] + f[i % 2][c - nums[i]];
+        // vector<vector<int>> f(2, vector(target + 1, 0));
+        // f[0][0] = 1;
+        // for (int i = 0; i < nums.size(); ++i) {
+        //     for (int c = 0; c < target + 1; ++c) {
+        //         if (c < nums[i]) {
+        //             // 这里利用了滚动数组的原理节省空间
+        //             // 因为 f(i) = f(i - 1) 只需要前面一个的值，再往前的值不需要
+        //             f[(i + 1) % 2][c] = f[i % 2][c];
+        //         }
+        //         else f[(i + 1) % 2][c] = f[i % 2][c] + f[i % 2][c - nums[i]];
+        //     }
+        // }
+        // return f[n % 2][target];
+
+        vector<int> dp(target + 1, 0);
+        dp[0] = 1;
+        for (int x: nums) {
+            for (int c = target; c >= x; --c) {
+                dp[c] = dp[c] + dp[c - x];
             }
         }
-        return f[n % 2][target];
+        return dp[target];
     }
 };
+
+
+// f[i][c] = max( f[i - 1][c] + f[i - 1][c - w[i]] + v[i])
